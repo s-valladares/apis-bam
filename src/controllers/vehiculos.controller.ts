@@ -7,8 +7,8 @@ import { IVehiculos } from '../interface/vehiculos';
 
 export async function getAll(req: Request, res: Response): Promise<Response> {
     const conn = await connect();
-    const marcas = await conn.query('SELECT * FROM vehiculos')
-    return res.json(marcas[0]);
+    const vehiculos = await conn.query('SELECT * FROM vehiculos')
+    return res.json(vehiculos[0]);
 }
 
 export async function create(req: Request, res: Response) {
