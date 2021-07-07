@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { connect } from '../../database';
 import { IConcesionario } from "../interface/concesionario";
+import { IVehiculos } from '../interface/vehiculos';
 
 
 
@@ -11,13 +12,20 @@ export async function getAll(req: Request, res: Response): Promise<Response> {
 }
 
 export async function create(req: Request, res: Response) {
-    const newDato: IConcesionario = req.body;
+    const newDato: IVehiculos = req.body;
     const conn = await connect();
     await conn.query('INSERT INTO vehiculos SET ?', [newDato]);
-    return res.json({
-        message: 'true ',
-        status: '200'
-    });
+    try {
+        return res.json({
+            success: 'true',
+            message: 'Insertado correctamente'
+        });
+    } catch (error) {
+        return res.json({
+            success: 'false',
+            message: error.toString()
+        });
+    }
 }
 
 
