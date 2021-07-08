@@ -14,16 +14,17 @@ export async function getAll(req: Request, res: Response): Promise<Response> {
 export async function create(req: Request, res: Response) {
     const newDato: IVehiculos = req.body;
     const conn = await connect();
-    await conn.query('INSERT INTO vehiculos SET ?', [newDato]);
+
     try {
+        await conn.query('INSERT INTO vehiculos SET ?', [newDato]);
         return res.json({
-            success: 'true',
+            success: true,
             message: 'Insertado correctamente'
         });
     } catch (error) {
         return res.json({
-            success: 'false',
-            message: error.toString()
+            success: false,
+            message: 'Ocurrió un error ' + error.message
         });
     }
 }

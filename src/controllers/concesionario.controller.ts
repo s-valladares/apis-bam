@@ -6,17 +6,35 @@ import { IConcesionario } from "../interface/concesionario";
 
 export async function getAll(req: Request, res: Response): Promise<Response> {
     const conn = await connect();
-    const marcas = await conn.query('SELECT * FROM concesionarios')
-    return res.json(marcas[0]);
+    try {
+        const concesioanrios = await conn.query('SELECT * FROM concesionarios')
+        return res.json(concesioanrios[0]);
+    } catch (error) {
+        return res.json({
+            success: false,
+            message: error.message
+        });
+    }
+
+
 }
 
 export async function create(req: Request, res: Response) {
     const newDato: IConcesionario = req.body;
     const conn = await connect();
-    await conn.query('INSERT INTO concesionarios SET ?', [newDato]);
-    return res.json({
-        message: 'true '
-    });
+
+    try {
+        await conn.query('INSERT INTO concesionarios SET ?', [newDato]);
+        return res.json({
+            success: true,
+            message: 'Insertado correctamente'
+        });
+    } catch (error) {
+        return res.json({
+            success: false,
+            message: 'Ocurrió un error ' + error.message
+        });
+    }
 }
 
 

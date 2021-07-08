@@ -13,10 +13,18 @@ export async function getAll(req: Request, res: Response): Promise<Response> {
 export async function create(req: Request, res: Response) {
     const newDato: IClientes = req.body;
     const conn = await connect();
-    await conn.query('INSERT INTO clientes SET ?', [newDato]);
-    return res.json({
-        message: 'true '
-    });
+    try {
+        await conn.query('INSERT INTO clientes SET ?', [newDato]);
+        return res.json({
+            success: true,
+            message: 'Ingresado correctamente'
+        });
+    } catch (error) {
+        return res.json({
+            succes: false,
+            message: 'Ocurrió un error ' + error.message
+        });
+    }
 }
 
 
