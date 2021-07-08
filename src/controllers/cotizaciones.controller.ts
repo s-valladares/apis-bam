@@ -6,7 +6,7 @@ import { ICotizaciones } from "../interface/cotizaciones";
 
 export async function getAll(req: Request, res: Response): Promise<Response> {
     const conn = await connect();
-    const cotizacion = await conn.query('SELECT co.*, cli.nombres, cli.apellidos, v.marca, v.linea, v.modelo, v.precio, conce.nombre as concesionario FROM cotizaciones co inner join clientes cli on cli.id = co.cliente_id inner join vehiculos v on co.vehiculo_id = v.id inner join concesionarios conce on conce.id = co.concesionario_id')
+    const cotizacion = await conn.query('SELECT co.id, co.createdAt, cli.nombres, cli.apellidos, v.marca, v.linea, v.modelo FROM cotizaciones co inner join clientes cli on cli.id = co.cliente_id inner join vehiculos v on co.vehiculo_id = v.id')
     return res.json(cotizacion[0]);
 }
 
@@ -40,19 +40,33 @@ export async function CotizacionesRp(req: Request, res: Response) {
 export async function getxId(req: Request, res: Response) {
     const id = req.params.Id;
     const conn = await connect();
-    const marcas = await conn.query('SELECT co.*, cli.Nombres, a.Nombres  FROM TCCotizaciones co inner join TCClientes cli on cli.id= co.TCClienteId inner join TCAgentes a on a.id=co.TCAgenteId  WHERE co.id=? ', [id]);
-    return res.json(marcas[0]);
+    try {
+        const cotizacion = await conn.query('SELECT co.*, cli.nombres, cli.apellidos, v.marca, v.color, v.linea, v.modelo, v.precio, conce.nombre as concesionario, CONCAT(a.nombres, " ", a.apellidos) AS agente FROM cotizaciones co inner join clientes cli on cli.id = co.cliente_id inner join vehiculos v on co.vehiculo_id = v.id inner join concesionarios conce on conce.id = co.concesionario_id inner join agentes a on a.id = co.agente_id  WHERE co.id=? ', [id]);
+        return res.json(cotizacion[0]);
+    } catch (error) {
+        return res.json({
+            success: false,
+            message: 'Ocurrió un error ' + error.message
+        });
+    }
 }
-
 
 
 export async function deletM(req: Request, res: Response) {
     const id = req.params.Id;
     const conn = await connect();
-    await conn.query('DELETE FROM TCCotizaciones WHERE id=? ', [id]);
-    return res.json({
-        message: 'true '
-    });
+    try {
+        await conn.query('DELETE FROM cotizaciones WHERE id=? ', [id]);
+        return res.json({
+            success: true,
+            message: 'Eliminada correctamente '
+        });
+    } catch (error) {
+        return res.json({
+            success: false,
+            message: 'Error: ' + error.message
+        });
+    }
 
 }
 
