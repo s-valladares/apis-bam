@@ -4,6 +4,7 @@ export interface IConcesionario {
     razon: string;
     email: string;
     departamento: string;
+    telefono: string;
     municipio: string;
     createdAt: Date;
 }
