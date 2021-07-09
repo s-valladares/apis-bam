@@ -39,6 +39,13 @@ export async function create(req: Request, res: Response) {
     }
 }
 
+export async function search(req: Request, res: Response) {
+    //const newDato:any = req.body;
+    const conn = await connect();
+    const datos = await conn.query('SELECT * FROM vehiculos where modelo like ? or marca like ? or linea like ? or tipo like ?', ['%' + req.params.Dato + '%', '%' + req.params.Dato + '%', '%' + req.params.Dato + '%', '%' + req.params.Dato + '%']);
+    return res.json(datos[0]);
+}
+
 
 export async function getxId(req: Request, res: Response) {
     const id = req.params.Id;

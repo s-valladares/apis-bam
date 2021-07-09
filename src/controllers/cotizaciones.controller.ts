@@ -39,7 +39,7 @@ export async function searchByDate(req: Request, res: Response) {
 export async function search(req: Request, res: Response) {
     //const newDato:any = req.body;
     const conn = await connect();
-    const datos = await conn.query('SELECT co.id, co.createdAt, cli.nombres, cli.apellidos, v.marca, v.linea, v.modelo FROM cotizaciones co inner join clientes cli on cli.id = co.cliente_id inner join vehiculos v on co.vehiculo_id = v.id where cli.nombres like ?', ['%' + req.params.Dato + '%']);
+    const datos = await conn.query('SELECT co.id, co.createdAt, cli.nombres, cli.apellidos, v.marca, v.linea, v.modelo FROM cotizaciones co inner join clientes cli on cli.id = co.cliente_id inner join vehiculos v on co.vehiculo_id = v.id where cli.nombres like ? or cli.apellidos like ? or v.modelo like ? or v.marca like ? or v.linea like ?', ['%' + req.params.Dato + '%', '%' + req.params.Dato + '%', '%' + req.params.Dato + '%', '%' + req.params.Dato + '%', '%' + req.params.Dato + '%']);
     return res.json(datos[0]);
 }
 
