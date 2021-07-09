@@ -1,4 +1,4 @@
-import { connectTest } from "../../database";
+import { connectTest } from "../../src/database";
 import { IClientes } from "../../src/interface/clientes";
 
 export async function getAll() {

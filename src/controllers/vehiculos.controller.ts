@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { connect, Querys } from '../../database';
+import { connect, Querys } from '../database';
 import { IConcesionario } from "../interface/concesionario";
 import { IVehiculos } from '../interface/vehiculos';
 

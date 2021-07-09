@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { connect } from '../../database';
+import { connect } from '../database';
 import { IAgentes } from "../interface/agentes";
 
 

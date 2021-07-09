@@ -1,4 +1,4 @@
-import { connectTest } from "../../database";
+import { connectTest } from "../../src/database";
 import { IConcesionario } from "../../src/interface/concesionario";
 
 export async function getAll() {
