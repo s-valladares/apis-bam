@@ -7,7 +7,7 @@ export async function connect() {
         user: process.env.USER,
         password: process.env.PASSWORD,
         database: process.env.DATA_BASE,
-        connectionLimit: 10
+        connectionLimit: 30
     });
     return connection;
 }
@@ -20,7 +20,7 @@ export async function connectTest() {
         user: process.env.USER,
         password: process.env.PASSWORD,
         database: process.env.DATA_BASE,
-        connectionLimit: 10
+        connectionLimit: 30
     });
     return connection;
 }
