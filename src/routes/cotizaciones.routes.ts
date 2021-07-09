@@ -12,6 +12,6 @@ router.route('/:Id')
     .delete(deletM)
     .put(UpdateM)
 
-router.post('/todo', CotizacionesRp);
+router.get('/fecha', CotizacionesRp);
 
 export default router;

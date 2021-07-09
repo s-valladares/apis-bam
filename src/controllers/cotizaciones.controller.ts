@@ -32,7 +32,7 @@ export async function create(req: Request, res: Response) {
 export async function CotizacionesRp(req: Request, res: Response) {
     //const newDato:any = req.body;
     const conn = await connect();
-    const datos = await conn.query('select  co.*,ag.Nombres as Agente, cli.Nombres as Cliente from TCCotizaciones co inner join TCAgentes ag on ag.id=co.tcAgenteid inner join TCClientes cli on cli.id = co.tcclienteid where date(co.created_at) between date(ifnull(?,co.created_at))and date(ifnull(?,co.created_at) );', [req.body.FechaInicio, req.body.FechaFin]);
+    const datos = await conn.query('select  co.*,ag.nombres as agente, cli.nombres as cliente from cotizaciones co inner join agentes ag on ag.id =co.agente_id inner join clientes cli on cli.id = co.cliente_id where date(co.createdAt) between date(ifnull(?,co.createdAt))and date(ifnull(?,co.createdAt) );', [req.params.Inicio, req.params.Fin]);
     return res.json(datos[0]);
 }
 

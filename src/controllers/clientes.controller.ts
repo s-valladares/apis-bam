@@ -31,8 +31,16 @@ export async function create(req: Request, res: Response) {
 export async function getxId(req: Request, res: Response) {
     const id = req.params.Id;
     const conn = await connect();
-    const clientes = await conn.query('SELECT cli.*,mu.Nombre FROM clientes cli inner join TCMunicipios mu on mu.id=cli.TCMunicipioId WHERE cli.id=? ', [id]);
-    return res.json(clientes[0]);
+
+    try {
+        const clientes = await conn.query('SELECT cl.*, con.nombre as tienda from clientes cl inner join concesionarios con on con.id = cl.concesionarioId WHERE cl.id=? ', [id]);
+        return res.json(clientes[0]);
+    } catch (error) {
+        return res.json({
+            success: false,
+            message: 'Ocurrió un error ' + error.message
+        });
+    }
 }
 
 
@@ -40,10 +48,20 @@ export async function getxId(req: Request, res: Response) {
 export async function deletM(req: Request, res: Response) {
     const id = req.params.Id;
     const conn = await connect();
-    await conn.query('DELETE FROM clientes WHERE id=? ', [id]);
-    return res.json({
-        message: 'true '
-    });
+
+
+    try {
+        await conn.query('DELETE FROM clientes WHERE id=? ', [id]);
+        return res.json({
+            success: true,
+            message: 'Eliminado correctamente '
+        });
+    } catch (error) {
+        return res.json({
+            success: false,
+            message: 'Error: ' + error.message
+        });
+    }
 
 }
 
@@ -52,9 +70,18 @@ export async function UpdateM(req: Request, res: Response) {
     const id = req.params.Id;
     const conn = await connect();
     const updateM: IClientes = req.body;
-    await conn.query('UPDATE clientes SET ? WHERE id=? ', [updateM, id]);
-    return res.json({
-        message: 'true '
-    });
+
+    try {
+        await conn.query('UPDATE clientes SET ? WHERE id=? ', [updateM, id]);
+        return res.json({
+            success: true,
+            message: 'Actualizado correctamente'
+        });
+    } catch (error) {
+        return res.json({
+            success: false,
+            message: 'Ocurrió un error ' + error.message
+        });
+    }
 }
 

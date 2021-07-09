@@ -43,8 +43,17 @@ export async function create(req: Request, res: Response) {
 export async function getxId(req: Request, res: Response) {
     const id = req.params.Id;
     const conn = await connect();
-    const marcas = await conn.query('SELECT v.*, co.nombre FROM vehiculos v inner join concesionarios co on v.concesionarioId = co.id WHERE v.id=? ', [id]);
-    return res.json(marcas[0]);
+
+
+    try {
+        const vehiculo = await conn.query('SELECT v.*, co.nombre FROM vehiculos v inner join concesionarios co on v.concesionarioId = co.id WHERE v.id=? ', [id]);
+        return res.json(vehiculo[0]);
+    } catch (error) {
+        return res.json({
+            success: false,
+            message: 'Ocurrió un error ' + error.message
+        });
+    }
 }
 
 
