@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-  concecionario-img-dev:
+  pruebabam-img-dev:
     build:
       context: .
       dockerfile: Dockerfile
