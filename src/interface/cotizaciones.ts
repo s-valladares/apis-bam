@@ -1,8 +1,9 @@
 export interface ICotizaciones {
     id: number;
-    TCAgenteId:number;
-    TCClienteId:number;
-    Estado:string;
-    Vencimiento:Date;
-    Created_At:Date;
+    agente_id: number;
+    cliente_id: number;
+    total: number;
+    vehiculo_id: number;
+    concesionario_id: number;
+    createdAt: Date;
 }

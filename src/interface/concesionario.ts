@@ -1,8 +1,10 @@
 export interface IConcesionario {
     id: number;
-    TCMunicipioId:number;
-    Nombre:string;
-    Razon:string;
-    Estado:string;
-    Created_At:Date;
+    nombre: string;
+    razon: string;
+    email: string;
+    departamento: string;
+    telefono: string;
+    municipio: string;
+    createdAt: Date;
 }
