@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { connect } from '../../database';
+import { connect, Querys } from '../../database';
 import { IConcesionario } from "../interface/concesionario";
 import { IVehiculos } from '../interface/vehiculos';
 
@@ -9,7 +9,7 @@ export async function getAll(req: Request, res: Response): Promise<Response> {
     const conn = await connect();
 
     try {
-        const vehiculos = await conn.query('SELECT * FROM vehiculos')
+        const vehiculos = await conn.query(Querys.VEHICULOS_SELECT_ALL)
         return res.json(vehiculos[0]);
     } catch (error) {
         return res.json({
@@ -26,7 +26,7 @@ export async function create(req: Request, res: Response) {
     const conn = await connect();
 
     try {
-        await conn.query('INSERT INTO vehiculos SET ?', [newDato]);
+        await conn.query(Querys.VEHICULOS_INSERT, [newDato]);
         return res.json({
             success: true,
             message: 'Insertado correctamente'
@@ -42,7 +42,7 @@ export async function create(req: Request, res: Response) {
 export async function search(req: Request, res: Response) {
     //const newDato:any = req.body;
     const conn = await connect();
-    const datos = await conn.query('SELECT * FROM vehiculos where modelo like ? or marca like ? or linea like ? or tipo like ?', ['%' + req.params.Dato + '%', '%' + req.params.Dato + '%', '%' + req.params.Dato + '%', '%' + req.params.Dato + '%']);
+    const datos = await conn.query(Querys.VEHICULOS_SEARCH, ['%' + req.params.Dato + '%', '%' + req.params.Dato + '%', '%' + req.params.Dato + '%', '%' + req.params.Dato + '%']);
     return res.json(datos[0]);
 }
 
@@ -53,7 +53,7 @@ export async function getxId(req: Request, res: Response) {
 
 
     try {
-        const vehiculo = await conn.query('SELECT v.*, co.nombre FROM vehiculos v inner join concesionarios co on v.concesionarioId = co.id WHERE v.id=? ', [id]);
+        const vehiculo = await conn.query(Querys.VEHICULOS_GET_ID, [id]);
         return res.json(vehiculo[0]);
     } catch (error) {
         return res.json({
