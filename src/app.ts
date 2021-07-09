@@ -1,6 +1,11 @@
 import express, { Application } from "express";
 import morgan from "morgan";
 import cors from "cors";
+import { resolve } from "path";
+import dotenv = require('dotenv');
+dotenv.config({
+    path: resolve(`${__dirname}/../.env`),
+});
 
 //ROUTES
 import indexRoutes from "./routes/index.routes";

@@ -3,24 +3,23 @@ import { createPool } from 'mysql2/promise';
 export async function connect() {
 
     const connection = await createPool({
-        host: 'localhost',
-        user: 'root',
-        password: '',
-        database: 'db_bam',
+        host: process.env.HOST,
+        user: process.env.USER,
+        password: process.env.PASSWORD,
+        database: process.env.DATA_BASE,
         connectionLimit: 10
     });
     return connection;
 }
 
 
-
 export async function connectTest() {
 
     const connection = await createPool({
-        host: 'localhost',
-        user: 'root',
-        password: '',
-        database: 'db_bam_test',
+        host: process.env.HOST,
+        user: process.env.USER,
+        password: process.env.PASSWORD,
+        database: process.env.DATA_BASE,
         connectionLimit: 10
     });
     return connection;
