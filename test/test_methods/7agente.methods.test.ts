@@ -4,6 +4,7 @@ import { IAgentes } from "../../src/interface/agentes";
 export async function getAll() {
   const conn = await connectTest();
   await conn.query("SELECT * FROM agentes");
+  conn.end();
   return true;
 }
 
@@ -22,6 +23,7 @@ export async function create() {
 
   const conn = await connectTest();
   await conn.query("INSERT INTO agentes SET ?", [agente]);
+  conn.end();
   return true;
 }
 
@@ -29,6 +31,7 @@ export async function getxId() {
   const id = 1;
   const conn = await connectTest();
   await conn.query("SELECT * FROM agentes WHERE id=? ", [id]);
+  conn.end();
   return true;
 }
 
@@ -47,6 +50,7 @@ export async function update() {
     createdAt: new Date(Date.now())
   };
   await conn.query("UPDATE agentes SET ? WHERE id=? ", [update, id]);
+  conn.end();
   return true;
 }
 
@@ -54,7 +58,7 @@ export async function deletM() {
   const id = 1;
   const conn = await connectTest();
   await conn.query("DELETE FROM agentes WHERE id=? ", [id]);
-
+  conn.end();
   return true;
 }
 

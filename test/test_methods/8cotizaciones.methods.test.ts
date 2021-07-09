@@ -10,6 +10,7 @@ export async function getAll() {
 
   const conn = await connectTest();
   await conn.query('select * from cotizaciones');
+  conn.end();
   return true;
 }
 // export async function getAll() {
@@ -33,6 +34,7 @@ export async function create() {
 
   const conn = await connectTest();
   await conn.query("INSERT INTO cotizaciones SET ?", [cot]);
+  conn.end();
   return true;
 }
 
@@ -40,6 +42,7 @@ export async function getxId() {
   const id = 1;
   const conn = await connectTest();
   await conn.query("SELECT * FROM cotizaciones WHERE id=? ", [id]);
+  conn.end();
   return true;
 }
 
@@ -48,6 +51,7 @@ export async function deletM() {
   const id = 1;
   const conn = await connectTest();
   await conn.query("DELETE FROM cotizaciones WHERE id=? ", [id]);
+  conn.end();
 
   return true;
 }
