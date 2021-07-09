@@ -35,6 +35,7 @@ export async function create() {
   try {
     await conn.query("INSERT INTO concesionarios SET ?", [concesionario]);
     await conn.query("INSERT INTO concesionarios SET ?", [concesionario2]);
+    conn.end();
     return true;
   } catch (error) {
     return false;
@@ -45,6 +46,7 @@ export async function getById() {
   const id = 1;
   const conn = await connectTest();
   await conn.query("SELECT * FROM concesionarios WHERE id=? ", [id]);
+  conn.end();
   return true;
 }
 
@@ -62,6 +64,7 @@ export async function update() {
     createdAt: new Date(),
   };
   await conn.query("UPDATE concesionarios SET ? WHERE id=? ", [update, id]);
+  conn.end();
   return true;
 }
 
@@ -69,6 +72,7 @@ export async function deleteConcesionario() {
   const id = 1;
   const conn = await connectTest();
   await conn.query("DELETE FROM concesionarios WHERE id=? ", [id]);
+  conn.end();
 
   return true;
 }

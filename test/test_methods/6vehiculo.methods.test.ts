@@ -4,6 +4,7 @@ import { IVehiculos } from "../../src/interface/vehiculos";
 export async function getAll() {
   const conn = await connectTest();
   await conn.query("SELECT * FROM vehiculos");
+  conn.end();
   return true;
 }
 
@@ -29,6 +30,7 @@ export async function create() {
 
   const conn = await connectTest();
   await conn.query("INSERT INTO vehiculos SET ?", [vehiculo]);
+  conn.end();
   return true;
 }
 
@@ -36,6 +38,7 @@ export async function getxId() {
   const id = 1;
   const conn = await connectTest();
   await conn.query("SELECT * FROM vehiculos WHERE id=? ", [id]);
+  conn.end();
   return true;
 }
 
@@ -61,6 +64,7 @@ export async function update() {
     createdAt: new Date(Date.now()),
   };
   await conn.query("UPDATE vehiculos SET ? WHERE id=? ", [update, id]);
+  conn.end();
   return true;
 }
 
@@ -68,6 +72,7 @@ export async function deletM() {
   const id = 1;
   const conn = await connectTest();
   await conn.query("DELETE FROM vehiculos WHERE id=? ", [id]);
+  conn.end();
 
   return true;
 }

@@ -8,8 +8,10 @@ export async function getAll(req: Request, res: Response): Promise<Response> {
     const conn = await connect();
     try {
         const concesioanrios = await conn.query('SELECT * FROM concesionarios')
+        conn.end();
         return res.json(concesioanrios[0]);
     } catch (error) {
+        conn.end();
         return res.json({
             success: false,
             message: error.message
@@ -25,11 +27,13 @@ export async function create(req: Request, res: Response) {
 
     try {
         await conn.query('INSERT INTO concesionarios SET ?', [newDato]);
+        conn.end();
         return res.json({
             success: true,
             message: 'Insertado correctamente'
         });
     } catch (error) {
+        conn.end();
         return res.json({
             success: false,
             message: 'Ocurrió un error ' + error.message
@@ -44,8 +48,10 @@ export async function getxId(req: Request, res: Response) {
 
     try {
         const concesionario = await conn.query('SELECT * FROM concesionarios WHERE id=? ', [id]);
+        conn.end();
         return res.json(concesionario[0]);
     } catch (error) {
+        conn.end();
         return res.json({
             success: false,
             message: 'Ocurrió un error ' + error.message
@@ -61,11 +67,13 @@ export async function deletM(req: Request, res: Response) {
 
     try {
         await conn.query('DELETE FROM concesionarios WHERE id=? ', [id]);
+        conn.end();
         return res.json({
             success: true,
             message: 'Eliminado correctamente '
         });
     } catch (error) {
+        conn.end();
         return res.json({
             success: false,
             message: 'Error: ' + error.message
@@ -82,11 +90,14 @@ export async function UpdateM(req: Request, res: Response) {
 
     try {
         await conn.query('UPDATE concesionarios SET ? WHERE id=? ', [updateM, id]);
+        conn.end();
         return res.json({
             success: true,
             message: 'Actualizado correctamente'
         });
     } catch (error) {
+        conn.end();
+
         return res.json({
             success: false,
             message: 'Ocurrió un error ' + error.message

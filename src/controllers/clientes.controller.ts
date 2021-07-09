@@ -7,6 +7,7 @@ import { IClientes } from "../interface/clientes";
 export async function getAll(req: Request, res: Response): Promise<Response> {
     const conn = await connect();
     const clientes = await conn.query('SELECT * FROM clientes')
+    conn.end();
     return res.json(clientes[0]);
 }
 
@@ -14,12 +15,15 @@ export async function create(req: Request, res: Response) {
     const newDato: IClientes = req.body;
     const conn = await connect();
     try {
+
         await conn.query('INSERT INTO clientes SET ?', [newDato]);
+        conn.end();
         return res.json({
             success: true,
             message: 'Ingresado correctamente'
         });
     } catch (error) {
+        conn.end();
         return res.json({
             succes: false,
             message: 'Ocurrió un error ' + error.message
@@ -34,8 +38,10 @@ export async function getxId(req: Request, res: Response) {
 
     try {
         const clientes = await conn.query('SELECT cl.*, con.nombre as tienda from clientes cl inner join concesionarios con on con.id = cl.concesionarioId WHERE cl.id=? ', [id]);
+        conn.end();
         return res.json(clientes[0]);
     } catch (error) {
+        conn.end();
         return res.json({
             success: false,
             message: 'Ocurrió un error ' + error.message
@@ -52,11 +58,13 @@ export async function deletM(req: Request, res: Response) {
 
     try {
         await conn.query('DELETE FROM clientes WHERE id=? ', [id]);
+        conn.end();
         return res.json({
             success: true,
             message: 'Eliminado correctamente '
         });
     } catch (error) {
+        conn.end();
         return res.json({
             success: false,
             message: 'Error: ' + error.message
@@ -73,11 +81,13 @@ export async function UpdateM(req: Request, res: Response) {
 
     try {
         await conn.query('UPDATE clientes SET ? WHERE id=? ', [updateM, id]);
+        conn.end();
         return res.json({
             success: true,
             message: 'Actualizado correctamente'
         });
     } catch (error) {
+        conn.end();
         return res.json({
             success: false,
             message: 'Ocurrió un error ' + error.message

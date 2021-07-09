@@ -23,6 +23,7 @@ export async function create() {
 
   const conn = await connectTest();
   await conn.query("INSERT INTO clientes SET ?", [cliente]);
+  conn.end();
   return true;
 }
 
@@ -30,6 +31,7 @@ export async function getxId() {
   const id = 1;
   const conn = await connectTest();
   await conn.query("SELECT * FROM clientes WHERE id=? ", [id]);
+  conn.end();
   return true;
 }
 
@@ -50,6 +52,7 @@ export async function update() {
     createdAt: new Date(Date.now())
   };
   await conn.query("UPDATE clientes SET ? WHERE id=? ", [update, id]);
+  conn.end();
   return true;
 }
 
@@ -57,6 +60,7 @@ export async function deletClient() {
   const id = 1;
   const conn = await connectTest();
   await conn.query("DELETE FROM clientes WHERE id=? ", [id]);
+  conn.end();
 
   return true;
 }
