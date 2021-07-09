@@ -1,4 +1,4 @@
-import { connectTest } from "../../database";
+import { connectTest } from "../../src/database";
 import { ICotizaciones } from "../../src/interface/cotizaciones";
 
 
