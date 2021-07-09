@@ -32,7 +32,7 @@ export async function create(req: Request, res: Response) {
 export async function getxId(req: Request, res: Response) {
     const id = req.params.Id;
     const conn = await connect();
-    const marcas = await conn.query('SELECT * FROM TCAgentes WHERE id=? ', [id]);
+    const marcas = await conn.query('SELECT * FROM agentes WHERE id=? ', [id]);
     return res.json(marcas[0]);
 }
 
@@ -41,7 +41,7 @@ export async function getxId(req: Request, res: Response) {
 export async function deletM(req: Request, res: Response) {
     const id = req.params.Id;
     const conn = await connect();
-    await conn.query('DELETE FROM TCAgentes WHERE id=? ', [id]);
+    await conn.query('DELETE FROM agentes WHERE id=? ', [id]);
     return res.json({
         message: 'true '
     });
@@ -53,7 +53,7 @@ export async function UpdateM(req: Request, res: Response) {
     const id = req.params.Id;
     const conn = await connect();
     const updateM: IAgentes = req.body;
-    await conn.query('UPDATE TCAgentes SET ? WHERE id=? ', [updateM, id]);
+    await conn.query('UPDATE agentes SET ? WHERE id=? ', [updateM, id]);
     return res.json({
         message: 'true '
     });

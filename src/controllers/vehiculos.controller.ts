@@ -52,10 +52,18 @@ export async function getxId(req: Request, res: Response) {
 export async function deletM(req: Request, res: Response) {
     const id = req.params.Id;
     const conn = await connect();
-    await conn.query('DELETE FROM TCVehiculos WHERE id=? ', [id]);
-    return res.json({
-        message: 'true '
-    });
+    try {
+        await conn.query('DELETE FROM vehiculos WHERE id=? ', [id]);
+        return res.json({
+            success: true,
+            message: 'Eliminado correctamente '
+        });
+    } catch (error) {
+        return res.json({
+            success: false,
+            message: 'Error: ' + error.message
+        });
+    }
 
 }
 
