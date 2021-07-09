@@ -1,75 +1,73 @@
-import {  connectTest } from "../../database";
+import { connectTest } from "../../database";
 import { IVehiculos } from "../../src/interface/vehiculos";
 
 export async function getAll() {
   const conn = await connectTest();
-  await conn.query("SELECT * FROM TCVehiculos");
+  await conn.query("SELECT * FROM vehiculos");
   return true;
 }
 
 export async function create() {
-  const newDato: IVehiculos = {
-    id: 1,
-    TCMarcaId:2,
-    TCConcesionarioId:2,
-    Modelo:"2021",
-    Precio: 60000,
-    Color: "Rojo",
-    Tipo: "Camioneta",
-    Traccion: "4x4",
-    Estado: "Activo",
-    Created_At: new Date(),
-    
-  };
-  const newDato2: IVehiculos = {
+  const vehiculo: IVehiculos = {
     id: 2,
-    TCMarcaId:2,
-    TCConcesionarioId:2,
-    Modelo:"2021",
-    Precio: 70000,
-    Color: "Naranja",
-    Tipo: "Sedan",
-    Traccion: "2x",
-    Estado: "Activo",
-    Created_At: new Date(),
+    modelo: '2005',
+    marca: 'Toyota',
+    descripcion: 'Todo terreno',
+    costo: 60000,
+    cantidad: 5,
+    precio: 85000,
+    tipo: 'Pickup',
+    color: "Rojo",
+    formaPago: 'Contado',
+    numeroPagos: 0,
+    cc: 2500,
+    v: 'V6',
+    concesionarioId: 2,
+    createdAt: new Date(Date.now()),
   };
+
+
   const conn = await connectTest();
-  await conn.query("INSERT INTO TCVehiculos SET ?", [newDato]);
-  await conn.query("INSERT INTO TCVehiculos SET ?", [newDato2]);
+  await conn.query("INSERT INTO vehiculos SET ?", [vehiculo]);
   return true;
 }
 
 export async function getxId() {
   const id = 1;
   const conn = await connectTest();
-  await conn.query("SELECT * FROM TCVehiculos WHERE id=? ", [id]);
+  await conn.query("SELECT * FROM vehiculos WHERE id=? ", [id]);
   return true;
 }
 
-export async function UpdateM() {
+export async function update() {
 
   const id = 1;
   const conn = await connectTest();
-  const updateM: IVehiculos = {
-    id: 1,
-    TCMarcaId:2,
-    TCConcesionarioId:2,
-    Modelo:"2022",
-    Precio: 70000,
-    Color: "Naranja update",
-    Tipo: "Sedan",
-    Traccion: "2x",
-    Estado: "Activo",
-    Created_At: new Date(),
+  const update: IVehiculos = {
+    id: 2,
+    modelo: '2010',
+    marca: 'Honda update',
+    descripcion: 'Sencilla update',
+    costo: 40000,
+    cantidad: 10,
+    precio: 65000,
+    tipo: 'Camioneta update',
+    color: "Gris",
+    formaPago: 'Crédito update',
+    numeroPagos: 12,
+    cc: 3000,
+    v: 'V4',
+    concesionarioId: 2,
+    createdAt: new Date(Date.now()),
   };
-  await conn.query("UPDATE TCVehiculos SET ? WHERE id=? ", [updateM, id]);
+  await conn.query("UPDATE vehiculos SET ? WHERE id=? ", [update, id]);
   return true;
 }
 
 export async function deletM() {
   const id = 1;
   const conn = await connectTest();
-  await conn.query("DELETE FROM TCVehiculos WHERE id=? ", [id]);
+  await conn.query("DELETE FROM vehiculos WHERE id=? ", [id]);
 
   return true;
 }

@@ -1,10 +1,10 @@
 export interface IAgentes {
-    id: number;
+    id?: number;
     nombres: string;
     apellidos: string;
     nacimiento: Date;
     direccion: string;
-    telefono: number;
+    telefono: string;
     concesionarioId: number;
     createdAt: Date;
 }

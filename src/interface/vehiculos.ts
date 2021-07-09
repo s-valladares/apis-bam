@@ -1,5 +1,5 @@
 export interface IVehiculos {
-    id: number;
+    id?: number;
     modelo: string;
     marca: string;
     descripcion: string;

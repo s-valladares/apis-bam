@@ -1,12 +1,10 @@
 export interface IClientes {
-    id: number;
+    id?: number;
     nombres: string;
     apellidos: string;
-    nacimiento: Date;
     direccion: string;
-    telefono: number;
+    telefono: string;
     email: string;
-    estadoCivl: string;
     nivelAcademico: string;
     concesionarioId: number;
     profesion: string;

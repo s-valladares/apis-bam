@@ -1,5 +1,5 @@
 export interface IConcesionario {
-    id: number;
+    id?: number;
     nombre: string;
     razon: string;
     email: string;

@@ -1,62 +1,74 @@
-import {  connectTest } from "../../database";
+import { connectTest } from "../../database";
 import { IConcesionario } from "../../src/interface/concesionario";
 
 export async function getAll() {
   const conn = await connectTest();
-  await conn.query("SELECT * FROM TCConcesionarios");
+  await conn.query("SELECT * FROM concesionarios");
   return true;
 }
 
 export async function create() {
-  const newDato: IConcesionario = {
-    id: 1,
-    TCMunicipioId:2,
-    Nombre: "Autos Gabriel",
-    Razon: "Venta de Autos",
-    Estado: "Activo",
-    Created_At: new Date(),
-  };
-  const newDato2: IConcesionario = {
+  const concesionario: IConcesionario = {
     id: 2,
-    TCMunicipioId:2,
-    Nombre: "Autos Hernandez",
-    Razon: "Venta de Autos",
-    Estado: "Activo",
-    Created_At: new Date(),
+    nombre: "Autos Esperanza",
+    razon: "Importadora Ramírez SA",
+    email: "esperanza@ramirez.com",
+    departamento: "Retalhuleu",
+    municipio: "Retalhuleu",
+    telefono: "55803299",
+    createdAt: new Date(Date.now()),
   };
-  const conn = await connectTest();
-  await conn.query("INSERT INTO TCConcesionarios SET ?", [newDato]);
-  await conn.query("INSERT INTO TCConcesionarios SET ?", [newDato2]);
-  return true;
-}
 
-export async function getxId() {
-  const id = 1;
-  const conn = await connectTest();
-  await conn.query("SELECT * FROM TCConcesionarios WHERE id=? ", [id]);
-  return true;
-}
-
-export async function UpdateM() {
-
-  const id = 1;
-  const conn = await connectTest();
-  const updateM: IConcesionario = {
-    id: 1,
-    TCMunicipioId:2,
-    Nombre: "Autos Gabriel update",
-    Razon: "Venta de Autos update",
-    Estado: "Activo",
-    Created_At: new Date(),
+  const concesionario2: IConcesionario = {
+    id: 3,
+    nombre: "Autos Esperanza",
+    razon: "Importadora Ramírez SA",
+    email: "esperanza@ramirez.com",
+    departamento: "Retalhuleu",
+    municipio: "Retalhuleu",
+    telefono: "55803299",
+    createdAt: new Date(Date.now()),
   };
-  await conn.query("UPDATE TCConcesionarios SET ? WHERE id=? ", [updateM, id]);
+
+
+  const conn = await connectTest();
+  try {
+    await conn.query("INSERT INTO concesionarios SET ?", [concesionario]);
+    await conn.query("INSERT INTO concesionarios SET ?", [concesionario2]);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+export async function getById() {
+  const id = 1;
+  const conn = await connectTest();
+  await conn.query("SELECT * FROM concesionarios WHERE id=? ", [id]);
   return true;
 }
 
-export async function deletM() {
+export async function update() {
+
+  const id = 2;
+  const conn = await connectTest();
+  const update: IConcesionario = {
+    nombre: "Maldonado's Car -update",
+    razon: "Autos Store SA",
+    email: "maldonado@autosstore.com",
+    departamento: "Escuintla",
+    municipio: "Santa Lucía -update",
+    telefono: "22458855",
+    createdAt: new Date(),
+  };
+  await conn.query("UPDATE concesionarios SET ? WHERE id=? ", [update, id]);
+  return true;
+}
+
+export async function deleteConcesionario() {
   const id = 1;
   const conn = await connectTest();
-  await conn.query("DELETE FROM TCConcesionarios WHERE id=? ", [id]);
+  await conn.query("DELETE FROM concesionarios WHERE id=? ", [id]);
 
   return true;
 }
