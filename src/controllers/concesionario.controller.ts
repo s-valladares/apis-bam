@@ -41,8 +41,16 @@ export async function create(req: Request, res: Response) {
 export async function getxId(req: Request, res: Response) {
     const id = req.params.Id;
     const conn = await connect();
-    const marcas = await conn.query('SELECT * FROM TCConcesionarios WHERE id=? ', [id]);
-    return res.json(marcas[0]);
+
+    try {
+        const concesionario = await conn.query('SELECT * FROM concesionarios WHERE id=? ', [id]);
+        return res.json(concesionario[0]);
+    } catch (error) {
+        return res.json({
+            success: false,
+            message: 'Ocurrió un error ' + error.message
+        });
+    }
 }
 
 
@@ -50,10 +58,19 @@ export async function getxId(req: Request, res: Response) {
 export async function deletM(req: Request, res: Response) {
     const id = req.params.Id;
     const conn = await connect();
-    await conn.query('DELETE FROM TCConcesionarios WHERE id=? ', [id]);
-    return res.json({
-        message: 'true '
-    });
+
+    try {
+        await conn.query('DELETE FROM concesionarios WHERE id=? ', [id]);
+        return res.json({
+            success: true,
+            message: 'Eliminado correctamente '
+        });
+    } catch (error) {
+        return res.json({
+            success: false,
+            message: 'Error: ' + error.message
+        });
+    }
 
 }
 
@@ -62,10 +79,19 @@ export async function UpdateM(req: Request, res: Response) {
     const id = req.params.Id;
     const conn = await connect();
     const updateM: IConcesionario = req.body;
-    await conn.query('UPDATE TCConcesionarios SET ? WHERE id=? ', [updateM, id]);
-    return res.json({
-        message: 'true '
-    });
+
+    try {
+        await conn.query('UPDATE concesionarios SET ? WHERE id=? ', [updateM, id]);
+        return res.json({
+            success: true,
+            message: 'Actualizado correctamente'
+        });
+    } catch (error) {
+        return res.json({
+            success: false,
+            message: 'Ocurrió un error ' + error.message
+        });
+    }
 }
 
 
