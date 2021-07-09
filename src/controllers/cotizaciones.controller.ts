@@ -29,10 +29,17 @@ export async function create(req: Request, res: Response) {
 }
 
 
-export async function CotizacionesRp(req: Request, res: Response) {
+export async function searchByDate(req: Request, res: Response) {
     //const newDato:any = req.body;
     const conn = await connect();
-    const datos = await conn.query('select  co.*,ag.nombres as agente, cli.nombres as cliente from cotizaciones co inner join agentes ag on ag.id =co.agente_id inner join clientes cli on cli.id = co.cliente_id where date(co.createdAt) between date(ifnull(?,co.createdAt))and date(ifnull(?,co.createdAt) );', [req.params.Inicio, req.params.Fin]);
+    const datos = await conn.query('SELECT co.id, co.createdAt, cli.nombres, cli.apellidos, v.marca, v.linea, v.modelo FROM cotizaciones co inner join clientes cli on cli.id = co.cliente_id inner join vehiculos v on co.vehiculo_id = v.id where date(co.createdAt) between date(ifnull(?,co.createdAt))and date(ifnull(?,co.createdAt) );', [req.params.fechaInicio, req.params.fechaFin]);
+    return res.json(datos[0]);
+}
+
+export async function search(req: Request, res: Response) {
+    //const newDato:any = req.body;
+    const conn = await connect();
+    const datos = await conn.query('SELECT co.id, co.createdAt, cli.nombres, cli.apellidos, v.marca, v.linea, v.modelo FROM cotizaciones co inner join clientes cli on cli.id = co.cliente_id inner join vehiculos v on co.vehiculo_id = v.id where cli.nombres like ?', ['%' + req.params.Dato + '%']);
     return res.json(datos[0]);
 }
 

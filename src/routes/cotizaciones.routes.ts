@@ -1,7 +1,7 @@
 import { Router } from 'express'
 const router = Router();
 
-import { getAll, create, getxId, deletM, UpdateM, CotizacionesRp } from "../controllers/cotizaciones.controller";
+import { getAll, create, getxId, deletM, UpdateM, searchByDate, search } from "../controllers/cotizaciones.controller";
 
 router.route('/')
     .get(getAll)
@@ -12,6 +12,9 @@ router.route('/:Id')
     .delete(deletM)
     .put(UpdateM)
 
-router.get('/fecha', CotizacionesRp);
+router.get('/fecha/:fechaInicio/:fechaFin', searchByDate);
+
+router.get('/search/:Dato', search);
+
 
 export default router;
